@@ -1,10 +1,12 @@
-Free Download Source Code "Online Survey System "
+This is a demo customer online survey and review application which can be adapted for any business
+
+Free Download Source Code "Customer Survey System Application"
 
 FIRST Download
 
-1.XAMPP
+1.XAMPP/LAMP
 
-2."TEXT EDITOR" NOTEPAD++ OR SUBLIME TEXT 3 / ETC.
+2."TEXT EDITOR" VS CODE OR SUBLIME TEXT 3 / ETC.
 
 3"survey"
 
@@ -12,9 +14,9 @@ FIRST Download
 
 5. Extract the file and copy "survey" folder
 
-6.Paste inside root directory/ where you install xammp local disk C: drive D: drive E: paste: (for xampp/htdocs, 
+6.Paste inside root directory/ where you install xammp/lamp local disk C: drive D: drive E: paste: (for xampp/htdocs, 
 
-7. Open PHPMyAdmin (http://localhost/phpmyadmin)
+7. Open PHPMyAdmin (http://localhost/phpmyadmin) or MySQL WorkBench
 
 8. Create a database with name survey_db
 
@@ -28,6 +30,3 @@ user: admin@admin.com
 pass: admin123
 
 create your own user
-
-****** https:1sourcecodr.blogspot.com ******
-Subcribe my You tube Channel **** 1 Source code ****

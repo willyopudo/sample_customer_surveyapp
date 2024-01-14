@@ -1,5 +1,6 @@
 <?php include 'db_connect.php' ?>
 <?php 
+
 $qry = $conn->query("SELECT * FROM survey_set where id = ".$_GET['id'])->fetch_array();
 foreach($qry as $k => $v){
 	if($k == 'title')
@@ -61,9 +62,13 @@ $answers = $conn->query("SELECT distinct(user_id) from answers where survey_id =
 						<input type="hidden" name="qid[]" value="<?php echo $row['id'] ?>">	
 							<?php
 								if($row['type'] == 'radio_opt'):
-									foreach(json_decode($row['frm_option']) as $k => $v):
+                                    $frm_opts = json_decode($row['frm_option']);
+                                    //var_dump($frm_opts);
+									foreach($frm_opts as $k => $v):
+                                        if($k == 'inline')
+                                            continue;
 							?>
-							<div class="icheck-primary">
+							<div class="icheck-primary <?= (isset($frm_opts->inline) && $frm_opts->inline == 1) ? 'd-inline' : '' ?>">
 		                        <input type="radio" id="option_<?php echo $k ?>" name="answer[<?php echo $row['id'] ?>]" value="<?php echo $k ?>" checked="">
 		                        <label for="option_<?php echo $k ?>"><?php echo $v ?></label>
 		                     </div>

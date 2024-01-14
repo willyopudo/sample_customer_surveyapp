@@ -1,6 +1,4 @@
 <?php
-session_start();
-ini_set('display_errors', 1);
 Class Action {
 	private $db;
 
@@ -172,6 +170,8 @@ Class Action {
 							$i = 1;
 					}
 					$arr[$k] = $v;
+                    if($type == 'radio_opt' && isset($radio_inline))
+                        $arr["inline"] = $radio_inline;
 				}
 			$data .= ", frm_option='".json_encode($arr)."' ";
 			}else{

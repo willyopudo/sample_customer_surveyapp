@@ -118,6 +118,7 @@ foreach($qry as $k => $v){
 	     	</tr>
      	</thead>
      	<tbody>
+            
      		<tr class="">
 		      	<td class="text-center">
 		      		<div class="icheck-primary d-inline" data-count = '1'>
@@ -174,6 +175,29 @@ foreach($qry as $k => $v){
 	     	</tr>
      	</thead>
      	<tbody>
+            <tr class="">
+                <td class="text-center">
+                    <label for="" class="control-label">Stacked</label>
+                    
+                </td>
+                <td class="">
+                    <div class="icheck-primary d-inline">
+                        <input type="radio" id="option_radioinline0" name="radio_inline" value="0" checked="">
+                        <label for="option_radioinline0" class="control-label"></label>
+                    </div>
+                </td>
+
+                <td class="">
+                    <label for="" class="control-label">Inline</label>
+                    
+                </td>
+                <td class="">
+                    <div class="icheck-primary d-inline">
+                        <input type="radio" id="option_radioinline1" name="radio_inline" value="1">
+                        <label for="option_radioinline1" class="control-label"></label>
+                    </div>
+                </td>
+            </tr>
      		<tr class="">
 		      	<td class="text-center">
 		      		<div class="icheck-primary d-inline" data-count = '1'>
