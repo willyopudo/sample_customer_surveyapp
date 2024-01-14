@@ -153,7 +153,13 @@ Class Action {
 	
 	function save_question(){
 		extract($_POST);
-			$data = " survey_id=$sid ";
+            $max_question = $this->db->query("SELECT MAX(order_by) FROM questions GROUP BY survey_id HAVING survey_id = {$sid} ")->fetch_column();
+            if(isset($max_question) &&  $max_question > 0){
+                $data = " order_by= $max_question";
+            }
+            else
+                $data = " order_by= 1";
+			$data .= ", survey_id=$sid ";
 			$data .= ", question='$question' ";
 			$data .= ", type='$type' ";
 			if($type != 'textfield_s'){
@@ -202,7 +208,12 @@ Class Action {
 			foreach($qid as $k => $v){
 				$data = " survey_id=$survey_id ";
 				$data .= ", question_id='$qid[$k]' ";
-				$data .= ", user_id='{$_SESSION['login_id']}' ";
+                if(isset($_SESSION['login_id'])){
+				    $data .= ", user_id='{$_SESSION['login_id']}' ";
+                }
+                else{
+                    $data .= ", user_id='6' ";
+                }
 				if($type[$k] == 'check_opt'){
 					$data .= ", answer='[".implode("],[",$answer[$k])."]' ";
 				}else{

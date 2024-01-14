@@ -106,10 +106,10 @@
 
   <!-- Main Footer -->
   <footer class="main-footer">
-    <strong><a href="https://1sourcecodr.blogspot.com/">1 Source code</a>.</strong>
-    Subscribe
+    <strong><a href="https://willyf.git.net/">Dev by Willyf</a>.</strong>
+    Donate
     <div class="float-right d-none d-sm-inline-block">
-      <b>Online Survey System</b>
+      <b>SUBZ Review and Feedback</b>
     </div>
   </footer>
 </div>

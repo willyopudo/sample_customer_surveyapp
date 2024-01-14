@@ -83,7 +83,7 @@
 	      toast: true,
 	      position: 'top-end',
 	      showConfirmButton: false,
-	      timer: 5000
+	      timer: 10000
 	    });
 	   window.alert_toast= function($msg = 'TEST',$bg = 'success'){
 	    //   $('#alert_toast').removeClass('bg-success')
@@ -101,7 +101,6 @@
 	    //   $('#alert_toast').addClass('bg-warning')
 	    // $('#alert_toast .toast-body').html($msg)
 	    // $('#alert_toast').toast({delay:3000}).toast('show');
-	    console.log('TEST')
 	      Toast.fire({
 	        icon: $bg,
 	        title: $msg
