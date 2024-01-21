@@ -56,9 +56,12 @@ include 'header.php'
                                 <input type="hidden" name="type[<?php echo $row['id'] ?>]" value="<?php echo $row['type'] ?>">	
                                     <?php
                                         if($row['type'] == 'radio_opt'):
-                                            foreach(json_decode($row['frm_option']) as $k => $v):
+                                            $frm_opts = json_decode($row['frm_option']);
+                                            foreach($frm_opts as $k => $v):
+                                                if($k == 'inline')
+                                                    continue;
                                     ?>
-                                    <div class="icheck-primary">
+                                    <div class="icheck-primary <?= (isset($frm_opts->inline) && $frm_opts->inline == 1) ? 'd-inline' : '' ?>">
                                         <input type="radio" id="option_<?php echo $k ?>" name="answer[<?php echo $row['id'] ?>]" value="<?php echo $k ?>" checked="">
                                         <label for="option_<?php echo $k ?>"><?php echo $v ?></label>
                                     </div>
