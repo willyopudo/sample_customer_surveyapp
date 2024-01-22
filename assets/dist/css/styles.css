@@ -101,3 +101,6 @@
     max-height: calc(100%);
     max-width: calc(100%);
   }
+  .green-text{
+    color: #028940;
+  }

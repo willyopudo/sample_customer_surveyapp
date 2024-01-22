@@ -26,11 +26,11 @@ include 'header.php'
                         </div>
                         <div class="card-body p-0 py-2">
                             <div class="container-fluid">
-                                <p>Title: <b><?php echo $stitle ?></b></p>
+                                <p class="green-text"><b><?php echo $stitle ?></b></p>
                                 <p class="mb-0">Description:</p>
                                 <small><?php echo $description; ?></small>
-                                <p>Start: <b><?php echo date("M d, Y",strtotime($start_date)) ?></b></p>
-                                <p>End: <b><?php echo date("M d, Y",strtotime($end_date)) ?></b></p>
+                                <p>Start: <b class="green-text"><?php echo date("M d, Y",strtotime($start_date)) ?></b></p>
+                                <p>End: <b class="green-text"><?php echo date("M d, Y",strtotime($end_date)) ?></b></p>
 
                             </div>
                             <hr class="border-primary">
@@ -38,6 +38,28 @@ include 'header.php'
                     </div>
                 </div>
                 <div class="col-md-8">
+                    <div class="card card-outline card-success">
+                        <div class="card-header">
+                            <h3 class="card-title"><b>Customer Details</b></h3>
+                        </div>
+                        <div class="card-body ui-sortable">
+                            <form action="" id="answer-survey-user" name="answer-survey-user">
+                                <div class="form-group">
+                                    <label for="" class="control-label">* Email Address</label>
+                                    <input type="email" name="custemail" class="form-control form-control-sm" placeholder="name@example.com" required >
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="control-label">* First Name</label>
+                                    <input type="text" name="firstlename" class="form-control form-control-sm"  >
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="control-label">* Last Name</label>
+                                    <input type="text" name="lastname" class="form-control form-control-sm" required >
+                                </div>
+                                
+                            </form>
+                        </div>
+                    </div>
                     <div class="card card-outline card-success">
                         <div class="card-header">
                             <h3 class="card-title"><b>Survey Questionaire</b></h3>
