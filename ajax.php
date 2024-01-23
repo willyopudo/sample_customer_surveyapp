@@ -59,6 +59,11 @@ if($action == "save_answer"){
 	if($save)
 		echo $save;
 }
+if($action == "save_answer_user"){
+	$save = $crud->save_answer_user();
+	if($save)
+		echo $save;
+}
 if($action == "update_user"){
 	$save = $crud->update_user();
 	if($save)

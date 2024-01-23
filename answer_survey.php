@@ -44,28 +44,36 @@ include 'header.php'
                         </div>
                         <div class="card-body ui-sortable">
                             <form action="" id="answer-survey-user" name="answer-survey-user">
+                                <input type="hidden" name="survey_id1" value="<?php echo $id ?>">
                                 <div class="form-group">
                                     <label for="" class="control-label">* Email Address</label>
                                     <input type="email" name="custemail" class="form-control form-control-sm" placeholder="name@example.com" required >
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="control-label">* First Name</label>
-                                    <input type="text" name="firstlename" class="form-control form-control-sm"  >
+                                    <input type="text" name="firstname" class="form-control form-control-sm"  >
                                 </div>
                                 <div class="form-group">
                                     <label for="" class="control-label">* Last Name</label>
                                     <input type="text" name="lastname" class="form-control form-control-sm" required >
                                 </div>
+                                <div class="form-group">
+                                    <p>By clicking Begin Survey, I agree to the SUBZ® Inc <a href="#">Terms of Use</a> and <a href="#">Privacy Statement</a>.</p>
+                                </div>
+                                <div class="d-flex w-100 ">
+                                    <button class="btn btn-sm btn-flat bg-gradient-primary mx-1" form="answer-survey-user">Begin survey</button>
+                                </div>
                                 
                             </form>
                         </div>
                     </div>
-                    <div class="card card-outline card-success">
+                    <div class="card card-outline card-success" id="answer-card" style="display:none">
                         <div class="card-header">
                             <h3 class="card-title"><b>Survey Questionaire</b></h3>
                         </div>
                         <form action="" id="manage-survey" name="manage-survey">
                             <input type="hidden" name="survey_id" value="<?php echo $id ?>">
+                            <input type="hidden" name="survey_user_id" id="survey_user_id" value="">
                         <div class="card-body ui-sortable">
                             <?php 
                             $question = $conn->query("SELECT * FROM questions where survey_id = $id order by abs(order_by) asc,abs(id) asc");
@@ -108,7 +116,7 @@ include 'header.php'
                         </form>
                         <div class="card-footer border-top border-success">
                             <div class="d-flex w-100 justify-content-center">
-                                <button class="btn btn-sm btn-flat bg-gradient-primary mx-1" form="manage-survey">Submit Answer</button>
+                                <button class="btn btn-sm btn-flat bg-gradient-primary mx-1" form="manage-survey">Submit Answers</button>
                                 <button class="btn btn-sm btn-flat bg-gradient-secondary mx-1" type="button" onclick="location.href = 'index.php?page=survey_widget'">Cancel</button>
                             </div>
                         </div>
@@ -139,10 +147,39 @@ include 'header.php'
                         end_load()
                         alert_toast("Thank You for taking our survey.",'success')
                         $('#manage-survey')[0].reset();
-                        // setTimeout(function(){
-                        //     location.href = 'index.php?page=survey_widget'
-                        // },2000)
+                        setTimeout(function(){
+                            location.href = 'finish_survey.php?surveyid=<?php echo $id ?>'
+                        },2000)
                     }
+                }
+            })
+        })
+
+        $('#answer-survey-user').submit(function(e){
+            e.preventDefault()
+            start_load()
+            $.ajax({
+                url:'ajax.php?action=save_answer_user',
+                method:'POST',
+                data:$(this).serialize(),
+                success:function(resp){
+                    end_load()
+                    if(resp > 0){
+                        
+                        alert_toast("User details saved success!.",'success')
+                        //$('#answer-card').removeAttr("hidden");
+                        $("#answer-card").fadeIn(4000);
+                        $("#survey_user_id").val(resp);
+                    }
+                    else{
+                        alert_toast("Failed to save user details!.",'error')
+
+                    }
+                },
+                error:function(resp){
+                    end_load()
+                    //console.log(resp);
+                    alert_toast(" " + resp.statusText,'error');
                 }
             })
         })

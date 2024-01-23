@@ -204,10 +204,24 @@ Class Action {
 		if(isset($update))
 			return 1;
 	}
+    function save_answer_user(){
+        extract($_POST);
+            $data = " email = '$custemail' , firstname = '$firstname', lastname = '$lastname', survey_id = '$survey_id1'";
+            $insertedId = 0;
+            if(!$this->db->query("INSERT INTO survey_user set $data")){
+                return("Error description: " . $this->db->error);
+            }
+            else{
+               
+                $insertedId = $this->db->insert_id;
+               
+            }
+            return $insertedId;
+    }
 	function save_answer(){
 		extract($_POST);
 			foreach($qid as $k => $v){
-				$data = " survey_id=$survey_id ";
+				$data = " survey_id=$survey_id , survey_user_id = $survey_user_id ";
 				$data .= ", question_id='$qid[$k]' ";
                 if(isset($_SESSION['login_id'])){
 				    $data .= ", user_id='{$_SESSION['login_id']}' ";

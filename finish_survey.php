@@ -5,7 +5,7 @@
 <?php 
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
-$qry = $conn->query("SELECT * FROM survey_set where id = ".$_GET['id'])->fetch_array();
+$qry = $conn->query("SELECT * FROM survey_set where id = ".$_GET['surveyid'])->fetch_array();
 foreach($qry as $k => $v){
 	if($k == 'title')
 		$k = 'stitle';
@@ -24,9 +24,9 @@ include 'header.php'
                         
                         <div class="card-body p-0 py-2 text-center">
                             <div class="container-fluid text-center">
-                                <h5 class="text-center"><b>Thank you for taking part in our survey. Please find your promotion code below</b></h5>
+                                <h5 class="text-center"><b>Thank you for taking part in our survey. Please find your incentive code below</b></h5>
                                 <br>
-                                <h2 class="green-text"><strong><?php echo '098366H65T' ?></strong></h2>
+                                <h2 class="green-text"><strong><?php echo '091003'.rand(100,999).'H01' ?></strong></h2>
                                 <!-- <p class="mb-0">Description:</p>
                                 <small><?php echo $description; ?></small> -->
                                
