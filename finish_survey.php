@@ -3,8 +3,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php 
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
 $qry = $conn->query("SELECT * FROM survey_set where id = ".$_GET['surveyid'])->fetch_array();
 foreach($qry as $k => $v){
 	if($k == 'title')

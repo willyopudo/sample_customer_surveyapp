@@ -29,8 +29,8 @@ include 'header.php'
                                 <p class="green-text"><b><?php echo $stitle ?></b></p>
                                 <p class="mb-0">Description:</p>
                                 <small><?php echo $description; ?></small>
-                                <p>Start: <b class="green-text"><?php echo date("M d, Y",strtotime($start_date)) ?></b></p>
-                                <p>End: <b class="green-text"><?php echo date("M d, Y",strtotime($end_date)) ?></b></p>
+                                <!-- <p>Start: <b class="green-text"><?php echo date("M d, Y",strtotime($start_date)) ?></b></p>
+                                <p>End: <b class="green-text"><?php echo date("M d, Y",strtotime($end_date)) ?></b></p> -->
 
                             </div>
                             <hr class="border-primary">
@@ -67,7 +67,83 @@ include 'header.php'
                             </form>
                         </div>
                     </div>
-                    <div class="card card-outline card-success" id="answer-card" style="display:none">
+                    <div class="card card-outline card-success">
+                        <div class="card-header">
+                            <h3 class="card-title"><b>Service Details</b></h3>
+                        </div>
+                        <div class="card-body ui-sortable">
+                            <form action="" id="answer-survey-user" name="answer-survey-user">
+                                <input type="hidden" name="survey_id2" value="<?php echo $id ?>">
+                                <div class="form-group">
+                                    <label for="" class="control-label">* Please enter SUBZ store # as listed on your receipt</label>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-xs-2 mr-1">
+                                        <input type="tel" name="storenumber" class="form-control form-control-sm" maxlength="6" size="12"
+                                        title="Please enter the first part of your Subway store number (before the dash)" required >
+                                    </div>
+                                         - 
+                                    <div class="col-xs-1 ml-1">
+                                        <input type="tel" name="storenumber2" class="form-control form-control-sm" maxlength="2" size="4"
+                                        title="Please enter the second part of your Subway store number (after the dash)" value="0" required >
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="control-label">* Please tell us the date of your purchase as listed on your receipt. Only purchases in the past 5 days are valid.</label>
+                                    <input type="date" name="servicedate" class="form-control form-control-sm" required >
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="control-label">* Please tell us the time of your purchase as listed on your receipt:</label>
+                                    <label for="" class="control-label">Hours</label>
+                                    <select name="servicehour" id="servicehour" class="custom-select custom-select-sm">
+										<option value="0">00(12am)</option>
+                                        <option value="01">01(1am)</option>
+                                        <option value="02">02(2am)</option>
+                                        <option value="03">03(3am)</option>
+                                        <option value="04">04(4am)</option>
+                                        <option value="05">05(5am)</option>
+                                        <option value="02">06(6am)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="control-label">* Minutes</label>
+                                    <select name="serviceminute" id="serviceminute" class="custom-select custom-select-sm">
+                                        <?php
+                                        $x = 0;
+                                        while($x < 60){
+                                            $text = $x < 10 ? '0'.$x : $x;
+                                            echo '<option value="'.$text.'">'.$text.'</option>';
+                                            $x++;
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="control-label">* Transaction Number</label>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-xs-2 mr-1">
+                                        <input type="tel" name="txnumber1" title="Please enter the first part of your transaction ID (before the slash)" 
+                                        class="form-control form-control-sm" value="1" maxlength="2" size="2" required >
+                                    </div>
+                                         / 
+                                    <div class="col-xs-1 ml-1 mr-1">
+                                        <input type="text" name="txnumber2" size="4" title="Please enter the second part of your transaction ID (between the slash and dash)" class="form-control form-control-sm" value="A" required >
+                                    </div>
+                                    -
+                                    <div class="col-xs-1 ml-1">
+                                        <input type="tel" name="txnumber3" title="Please enter the third part of your transaction ID (after the dash)" 
+                                        class="form-control form-control-sm" maxlength="10" size="12" required >
+                                    </div>
+                                </div>
+                                <div class="d-flex w-100 ">
+                                    <button class="btn btn-sm btn-flat bg-gradient-primary mx-1" form="answer-survey-user">Next</button>
+                                </div>
+                                
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card card-outline card-success" id="answer-card" style="display:block">
                         <div class="card-header">
                             <h3 class="card-title"><b>Survey Questionaire</b></h3>
                         </div>
@@ -110,8 +186,42 @@ include 'header.php'
                                     </div>
                                 <?php endif; ?>
                                 </div>	
+                               
                             </div>
                             <?php endwhile; ?>
+                            <strong class="mb-5">How likely if it that you would recommend SUBZ to a friend or colleague?</strong>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <i class='far fa-frown' style='font-size:48px;color:red'></i>
+                                    <i class='far fa-smile float-right' style='font-size:48px;color:green'></i>
+                                   
+                                </div>
+                              
+                            </div>
+                            <div class="col-md-6 ">
+                                <div class="row">
+                                    <div class="mx-0 mx-sm-auto">
+                                        
+                                        <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
+                                            <div class="btn-group me-2" role="group" aria-label="First group">
+                                            <button type="button" class="btn btn-light" style="height:50px;width:50px">0</button>
+                                            <button type="button" class="btn btn-light" style="height:50px;width:50px">1</button>
+                                            <button type="button" class="btn btn-light" style="height:50px;width:50px">2</button>
+                                            <button type="button" class="btn btn-light" style="height:50px;width:50px">3</button>
+                                            <button type="button" class="btn btn-light" style="height:50px;width:50px">4</button>
+                                            <button type="button" class="btn btn-light" style="height:50px;width:50px">5</button>
+                                            <button type="button" class="btn btn-light" style="height:50px;width:50px">6</button>
+                                            <button type="button" class="btn btn-light" style="height:50px;width:50px">7</button>
+                                            <button type="button" class="btn btn-light" style="height:50px;width:50px">8</button>
+                                            <button type="button" class="btn btn-light" style="height:50px;width:50px">9</button>
+                                            <button type="button" class="btn btn-light" style="height:50px;width:50px">10</button>
+                                            </div>
+                                        </div>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                                
                         </div>
                         </form>
                         <div class="card-footer border-top border-success">

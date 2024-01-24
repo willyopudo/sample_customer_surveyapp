@@ -35,6 +35,8 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
   <link rel="stylesheet" href="assets/dist/css/styles.css">
+
+
 	<script src="assets/plugins/jquery/jquery.min.js"></script>
   <!-- jQuery UI 1.11.4 -->
   <script src="assets/plugins/jquery-ui/jquery-ui.min.js"></script>
