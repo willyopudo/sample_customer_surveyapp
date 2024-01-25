@@ -67,12 +67,12 @@ include 'header.php'
                             </form>
                         </div>
                     </div>
-                    <div class="card card-outline card-success">
+                    <div class="card card-outline card-success" id="service-card" style="display:none">
                         <div class="card-header">
                             <h3 class="card-title"><b>Service Details</b></h3>
                         </div>
                         <div class="card-body ui-sortable">
-                            <form action="" id="answer-survey-user" name="answer-survey-user">
+                            <form action="" id="answer-survey-service" name="answer-survey-service">
                                 <input type="hidden" name="survey_id2" value="<?php echo $id ?>">
                                 <div class="form-group">
                                     <label for="" class="control-label">* Please enter SUBZ store # as listed on your receipt</label>
@@ -102,7 +102,24 @@ include 'header.php'
                                         <option value="03">03(3am)</option>
                                         <option value="04">04(4am)</option>
                                         <option value="05">05(5am)</option>
-                                        <option value="02">06(6am)</option>
+                                        <option value="06">06(6am)</option>
+                                        <option value="07">07(7am)</option>
+                                        <option value="08">08(8am)</option>
+                                        <option value="09">09(9am)</option>
+                                        <option value="10">10(10am)</option>
+                                        <option value="11">11(11am)</option>
+                                        <option value="12">12(12am)</option>
+                                        <option value="13">01(1pm)</option>
+                                        <option value="14">02(2pm)</option>
+                                        <option value="15">03(3pm)</option>
+                                        <option value="16">04(4pm)</option>
+                                        <option value="17">05(5pm)</option>
+                                        <option value="18">06(6pm)</option>
+                                        <option value="19">07(7pm)</option>
+                                        <option value="20">08(8pm)</option>
+                                        <option value="21">09(9pm)</option>
+                                        <option value="22">10(10pm)</option>
+                                        <option value="23">11(11pm)</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -137,19 +154,20 @@ include 'header.php'
                                     </div>
                                 </div>
                                 <div class="d-flex w-100 ">
-                                    <button class="btn btn-sm btn-flat bg-gradient-primary mx-1" form="answer-survey-user">Next</button>
+                                    <button class="btn btn-sm btn-flat bg-gradient-primary mx-1" form="answer-survey-service">Next</button>
                                 </div>
                                 
                             </form>
                         </div>
                     </div>
-                    <div class="card card-outline card-success" id="answer-card" style="display:block">
+                    <div class="card card-outline card-success" id="answer-card" style="display:none">
                         <div class="card-header">
                             <h3 class="card-title"><b>Survey Questionaire</b></h3>
                         </div>
                         <form action="" id="manage-survey" name="manage-survey">
                             <input type="hidden" name="survey_id" value="<?php echo $id ?>">
                             <input type="hidden" name="survey_user_id" id="survey_user_id" value="">
+                            <input type="hidden" name="survey_service_id" id="survey_service_id" value="">
                         <div class="card-body ui-sortable">
                             <?php 
                             $question = $conn->query("SELECT * FROM questions where survey_id = $id order by abs(order_by) asc,abs(id) asc");
@@ -158,21 +176,61 @@ include 'header.php'
                             <div class="callout callout-info">
                                 <h5><?php echo $row['question'] ?></h5>	
                                 <div class="col-md-12">
-                                <input type="hidden" name="qid[<?php echo $row['id'] ?>]" value="<?php echo $row['id'] ?>">	
-                                <input type="hidden" name="type[<?php echo $row['id'] ?>]" value="<?php echo $row['type'] ?>">	
+                                    <input type="hidden" name="qid[<?php echo $row['id'] ?>]" value="<?php echo $row['id'] ?>">	
+                                    <input type="hidden" name="type[<?php echo $row['id'] ?>]" value="<?php echo $row['type'] ?>">	
                                     <?php
                                         if($row['type'] == 'radio_opt'):
                                             $frm_opts = json_decode($row['frm_option']);
+                                            
+                                        if(isset($frm_opts->inline) && $frm_opts->inline == 1){
+                                            ?>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <i class='far fa-frown' style='font-size:48px;color:red'></i>
+                                                        <i class='far fa-smile float-right' style='font-size:48px;color:green'></i>
+                                                    
+                                                    </div>
+                                                
+                                                </div>
+                                                <div class="col-md-6 ">
+                                                    <div class="row">
+                                                        <div class="mx-0 mx-sm-auto">
+                                                            
+                                                            <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
+                                                                <div class="btn-group me-2" role="group" aria-label="First group">
+                                                                <?php
+                                                                $count = 0;
+                                                                foreach($frm_opts as $k => $v):
+                                                                    if($k == 'inline')
+                                                                        continue;
+                                                                    echo ' <button type="button" id="'.$k.'" class="btn btn-light" style="height:50px;width:50px" onclick="handleRateBtnClick(this)">'.$count.'</button>';
+                                                                    echo ' <input type="radio" id="option_'.$k.'" name="answer['.$row['id'].']" value="'.$k.'" hidden >';
+                                                                    $count++;
+                                                                endforeach;
+                                                                ?>
+                                                                
+                                                                </div>
+                                                            </div>
+                                                        
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php
+                                        }
+                                        else{
                                             foreach($frm_opts as $k => $v):
-                                                if($k == 'inline')
-                                                    continue;
+                                            ?>
+                                            <div class="icheck-primary">
+                                                <input type="radio" id="option_<?php echo $k ?>" name="answer[<?php echo $row['id'] ?>]" value="<?php echo $k ?>" checked="">
+                                                <label for="option_<?php echo $k ?>"><?php echo $v ?></label>
+                                            </div>
+                                            <?php
+                                            endforeach;
+                                        }
                                     ?>
-                                    <div class="icheck-primary <?= (isset($frm_opts->inline) && $frm_opts->inline == 1) ? 'd-inline' : '' ?>">
-                                        <input type="radio" id="option_<?php echo $k ?>" name="answer[<?php echo $row['id'] ?>]" value="<?php echo $k ?>" checked="">
-                                        <label for="option_<?php echo $k ?>"><?php echo $v ?></label>
-                                    </div>
-                                        <?php endforeach; ?>
-                                <?php elseif($row['type'] == 'check_opt'): 
+                                            
+                                    <?php 
+                                        elseif($row['type'] == 'check_opt'): 
                                             foreach(json_decode($row['frm_option']) as $k => $v):
                                     ?>
                                     <div class="icheck-primary">
@@ -180,47 +238,14 @@ include 'header.php'
                                         <label for="option_<?php echo $k ?>"><?php echo $v ?></label>
                                     </div>
                                         <?php endforeach; ?>
-                                <?php else: ?>
+                                    <?php else: ?>
                                     <div class="form-group">
                                         <textarea name="answer[<?php echo $row['id'] ?>]" id="" cols="30" rows="4" class="form-control" placeholder="Write Something Here..." ></textarea>
                                     </div>
-                                <?php endif; ?>
+                                    <?php endif; ?>
                                 </div>	
-                               
                             </div>
                             <?php endwhile; ?>
-                            <strong class="mb-5">How likely if it that you would recommend SUBZ to a friend or colleague?</strong>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <i class='far fa-frown' style='font-size:48px;color:red'></i>
-                                    <i class='far fa-smile float-right' style='font-size:48px;color:green'></i>
-                                   
-                                </div>
-                              
-                            </div>
-                            <div class="col-md-6 ">
-                                <div class="row">
-                                    <div class="mx-0 mx-sm-auto">
-                                        
-                                        <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
-                                            <div class="btn-group me-2" role="group" aria-label="First group">
-                                            <button type="button" class="btn btn-light" style="height:50px;width:50px">0</button>
-                                            <button type="button" class="btn btn-light" style="height:50px;width:50px">1</button>
-                                            <button type="button" class="btn btn-light" style="height:50px;width:50px">2</button>
-                                            <button type="button" class="btn btn-light" style="height:50px;width:50px">3</button>
-                                            <button type="button" class="btn btn-light" style="height:50px;width:50px">4</button>
-                                            <button type="button" class="btn btn-light" style="height:50px;width:50px">5</button>
-                                            <button type="button" class="btn btn-light" style="height:50px;width:50px">6</button>
-                                            <button type="button" class="btn btn-light" style="height:50px;width:50px">7</button>
-                                            <button type="button" class="btn btn-light" style="height:50px;width:50px">8</button>
-                                            <button type="button" class="btn btn-light" style="height:50px;width:50px">9</button>
-                                            <button type="button" class="btn btn-light" style="height:50px;width:50px">10</button>
-                                            </div>
-                                        </div>
-                                    
-                                    </div>
-                                </div>
-                            </div>
                                 
                         </div>
                         </form>
@@ -257,8 +282,9 @@ include 'header.php'
                         end_load()
                         alert_toast("Thank You for taking our survey.",'success')
                         $('#manage-survey')[0].reset();
+                        //console.log('finish_survey.php?surveyid=<?php echo $id ?>&userid='+$("#survey_user_id").val());
                         setTimeout(function(){
-                            location.href = 'finish_survey.php?surveyid=<?php echo $id ?>'
+                            location.href = 'finish_survey.php?surveyid=<?php echo $id ?>&userid='+$("#survey_user_id").val()
                         },2000)
                     }
                 }
@@ -278,7 +304,7 @@ include 'header.php'
                         
                         alert_toast("User details saved success!.",'success')
                         //$('#answer-card').removeAttr("hidden");
-                        $("#answer-card").fadeIn(4000);
+                        $("#service-card").fadeIn(4000);
                         $("#survey_user_id").val(resp);
                     }
                     else{
@@ -293,6 +319,47 @@ include 'header.php'
                 }
             })
         })
+
+        $('#answer-survey-service').submit(function(e){
+            e.preventDefault()
+            start_load()
+            $.ajax({
+                url:'ajax.php?action=save_answer_service',
+                method:'POST',
+                data:$(this).serialize(),
+                success:function(resp){
+                    end_load()
+                    if(resp > 0){
+                        
+                        alert_toast("Service details saved success!.",'success')
+                        //$('#answer-card').removeAttr("hidden");
+                        $("#service-card").fadeOut(4000);
+                        $("#answer-card").fadeIn(4000);
+                        $("#survey_service_id").val(resp);
+                    }
+                    else{
+                        alert_toast("Failed to save service details!.",'error')
+
+                    }
+                },
+                error:function(resp){
+                    end_load()
+                    //console.log(resp);
+                    alert_toast(" " + resp.statusText,'error');
+                }
+            })
+        })
+
+        function handleRateBtnClick(elem){
+            console.log('option_'+elem.id);
+            $("#option_"+elem.id).prop("checked", "checked");
+            if($(elem).hasClass('rate-btn-color'))
+                $(elem).removeClass('rate-btn-color');
+            else{
+                $(elem).siblings().removeClass('rate-btn-color')
+                $(elem).addClass('rate-btn-color');
+            }
+        }
     </script>
    
 </body>

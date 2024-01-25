@@ -218,10 +218,26 @@ Class Action {
             }
             return $insertedId;
     }
+    function save_answer_service(){
+        extract($_POST);
+            $data = " storenumber = '$storenumber$storenumber2' , servicedate = '$servicedate $servicehour:$serviceminute:00', transactionnumber = '$txnumber1$txnumber2$txnumber3'";
+            // exit(var_dump($data));
+            $insertedId = 0;
+            if(!$this->db->query("INSERT INTO survey_service set $data")){
+                return("Error description: " . $this->db->error);
+            }
+            else{
+               
+                $insertedId = $this->db->insert_id;
+               
+            }
+            return $insertedId;
+    }
 	function save_answer(){
 		extract($_POST);
+            //exit(var_dump($_POST));
 			foreach($qid as $k => $v){
-				$data = " survey_id=$survey_id , survey_user_id = $survey_user_id ";
+				$data = " survey_id=$survey_id , survey_user_id = $survey_user_id , survey_service_id = $survey_service_id ";
 				$data .= ", question_id='$qid[$k]' ";
                 if(isset($_SESSION['login_id'])){
 				    $data .= ", user_id='{$_SESSION['login_id']}' ";
