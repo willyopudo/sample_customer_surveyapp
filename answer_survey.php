@@ -160,7 +160,7 @@ include 'header.php'
                             </form>
                         </div>
                     </div>
-                    <div class="card card-outline card-success" id="answer-card" style="display:none">
+                    <div class="card card-outline card-success" id="answer-card" style="display:block">
                         <div class="card-header">
                             <h3 class="card-title"><b>Survey Questionaire</b></h3>
                         </div>
@@ -192,9 +192,10 @@ include 'header.php'
                                                     </div>
                                                 
                                                 </div>
-                                                <div class="col-md-6 ">
-                                                    <div class="row">
-                                                        <div class="mx-0 mx-sm-auto">
+                                                <div class="row">
+                                                    <div class="col-md-6 ">
+                                                   
+                                                       
                                                             
                                                             <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
                                                                 <div class="btn-group me-2" role="group" aria-label="First group">
@@ -212,7 +213,6 @@ include 'header.php'
                                                                 </div>
                                                             </div>
                                                         
-                                                        </div>
                                                     </div>
                                                 </div>
                                             <?php
@@ -246,7 +246,63 @@ include 'header.php'
                                 </div>	
                             </div>
                             <?php endwhile; ?>
-                                
+                            <div class="callout callout-info">
+                                <h5>Rate the overall service in a scale of 0 to 10</h5>	
+                                <div class="col-md-12">
+                                <div class="rb-box">
+                                    <!-- Radio Button Module -->
+                                    <div id="rb-1" class="rb">
+                                        <div class="rb-tab rb-tab-active" data-value="0">
+                                        <div class="rb-spot">
+                                            <span class="rb-txt">0</span>
+                                        </div>
+                                        </div>
+                                        <div class="rb-tab " data-value="1">
+                                        <div class="rb-spot">
+                                            <span class="rb-txt">1</span>
+                                        </div>
+                                        </div><div class="rb-tab" data-value="2">
+                                        <div class="rb-spot">
+                                            <span class="rb-txt">2</span>
+                                        </div>
+                                        </div><div class="rb-tab" data-value="3">
+                                        <div class="rb-spot">
+                                            <span class="rb-txt">3</span>
+                                        </div>
+                                        </div><div class="rb-tab" data-value="4">
+                                        <div class="rb-spot">
+                                            <span class="rb-txt">4</span>
+                                        </div>
+                                        </div><div class="rb-tab" data-value="5">
+                                        <div class="rb-spot">
+                                            <span class="rb-txt">5</span>
+                                        </div>
+                                        </div><div class="rb-tab" data-value="6">
+                                        <div class="rb-spot">
+                                            <span class="rb-txt">6</span>
+                                        </div>
+                                        </div><div class="rb-tab" data-value="7">
+                                        <div class="rb-spot">
+                                            <span class="rb-txt">7</span>
+                                        </div>
+                                        </div><div class="rb-tab" data-value="8">
+                                        <div class="rb-spot">
+                                            <span class="rb-txt">8</span>
+                                        </div>
+                                        </div><div class="rb-tab" data-value="9">
+                                        <div class="rb-spot">
+                                            <span class="rb-txt">9</span>
+                                        </div>
+                                        </div><div class="rb-tab" data-value="10">
+                                        <div class="rb-spot">
+                                            <span class="rb-txt">10</span>
+                                        </div>
+                                        </div>
+                                    </div>  
+                                </div>
+                                </div>
+                            </div>
+                            
                         </div>
                         </form>
                         <div class="card-footer border-top border-success">
@@ -360,6 +416,12 @@ include 'header.php'
                 $(elem).addClass('rate-btn-color');
             }
         }
+        //Switcher function:
+        $(".rb-tab").click(function(){
+        //Spot switcher:
+        $(this).parent().find(".rb-tab").removeClass("rb-tab-active");
+        $(this).addClass("rb-tab-active");
+        });
     </script>
    
 </body>

@@ -1,18 +1,18 @@
-.toast{
+.toast {
   display: none;
-  min-width: 20vw
+  min-width: 20vw;
 }
 .toast.show {
-    display: block;
-    opacity: 1;
-    position: fixed;
-    z-index: 99999999;
-    margin: 20px;
-    right: 0;
-    top: 3.5rem;
+  display: block;
+  opacity: 1;
+  position: fixed;
+  z-index: 99999999;
+  margin: 20px;
+  right: 0;
+  top: 3.5rem;
 }
-.swal2-container{
-    z-index: 99999999;
+.swal2-container {
+  z-index: 99999999;
 }
 #preloader2 {
   position: fixed;
@@ -56,54 +56,121 @@
   }
 }
 .truncate {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    font-size: smaller;
-    color: #000000cf;
-    font-style: italic;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  font-size: smaller;
+  color: #000000cf;
+  font-style: italic;
 }
- .modal-dialog.large {
-    width: 80% !important;
-    max-width: unset;
-  }
-  .modal-dialog.mid-large {
-    width: 50% !important;
-    max-width: unset;
-  }
-  #viewer_modal .btn-close {
-    position: absolute;
-    z-index: 999999;
-    /*right: -4.5em;*/
-    background: unset;
-    color: white;
-    border: unset;
-    font-size: 27px;
-    top: 0;
+.modal-dialog.large {
+  width: 80% !important;
+  max-width: unset;
+}
+.modal-dialog.mid-large {
+  width: 50% !important;
+  max-width: unset;
+}
+#viewer_modal .btn-close {
+  position: absolute;
+  z-index: 999999;
+  /*right: -4.5em;*/
+  background: unset;
+  color: white;
+  border: unset;
+  font-size: 27px;
+  top: 0;
 }
 #viewer_modal .modal-dialog {
-        width: 80%;
-    max-width: unset;
-    height: calc(90%);
-    max-height: unset;
+  width: 80%;
+  max-width: unset;
+  height: calc(90%);
+  max-height: unset;
 }
-  #viewer_modal .modal-content {
-       background: black;
-    border: unset;
-    height: calc(100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  #viewer_modal img,#viewer_modal video{
-    max-height: calc(100%);
-    max-width: calc(100%);
-  }
-  .green-text{
-    color: #028940;
-  }
-  .rate-btn-color{
-    background-color : #F1B700
-  }
+#viewer_modal .modal-content {
+  background: black;
+  border: unset;
+  height: calc(100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#viewer_modal img,
+#viewer_modal video {
+  max-height: calc(100%);
+  max-width: calc(100%);
+}
+.green-text {
+  color: #028940;
+}
+.rate-btn-color {
+  background-color: #f1b700;
+}
+.rb-box {
+  /* width: 80%;
+  max-width: 420px;
+  margin: 50px auto;
+  padding: 1.3em;
+  background: #292942;
+  border-radius: 0.75em;
+  -webkit-filter: drop-shadow(1px 2px 5px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(1px 2px 5px rgba(0, 0, 0, 0.3));
+  box-shadow: 0 2px 2px rgba(243, 49, 128, 0.5),
+    0 0px 5px rgba(243, 49, 128, 0.15), 0 0px 4px rgba(0, 0, 0, 0.35),
+    0 5px 20px rgba(243, 49, 128, 0.25), 0 15px 50px rgba(243, 49, 128, 0.75),
+    inset 0 0 15px rgba(255, 255, 255, 0.05); */
+}
+
+/* Custom Radio Button */
+p {
+  font-size: 0.9em;
+}
+
+.rb {
+  padding: 15px 0;
+  text-align: center;
+  background: #ecf7eb;
+  border-radius: 0.3em;
+}
+
+.rb-tab {
+  display: inline-block;
+  position: relative;
+  width: 9%;
+}
+
+.rb-txt {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1em;
+  color: inherit;
+}
+
+.rb-spot {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -75%);
+  background: transparent;
+  border: 2px solid;
+  border-radius: 100%;
+  cursor: pointer;
+  transition: ease 0.5s;
+}
+
+.rb-tab-active .rb-spot {
+  background: rgba(0, 0, 0, 0.35);
+  border: 2px solid #f1b700;
+}
+
+/* Submit Button */
+.button-box {
+  padding: 10px 0;
+  text-align: center;
+}
