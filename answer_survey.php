@@ -3,8 +3,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php 
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
+//error_reporting(E_ALL);
+//ini_set('display_errors', '1');
 $qry = $conn->query("SELECT * FROM survey_set where id = ".$_GET['id'])->fetch_array();
 foreach($qry as $k => $v){
 	if($k == 'title')
@@ -181,8 +181,9 @@ include 'header.php'
                                     <?php
                                         if($row['type'] == 'radio_opt'):
                                             $frm_opts = json_decode($row['frm_option']);
-                                            
-                                        if(isset($frm_opts->inline) && $frm_opts->inline == 1){
+                                        //var_dump(array_values($frm_opts));
+                                        $first_val  =  reset($frm_opts);
+                                        if(isset($frm_opts->inline) && $frm_opts->inline == 1 && $first_val != 'Highly Dissatisfied'){
                                             ?>
                                                 <div class="row">
                                                     <div class="col-md-6">
@@ -193,28 +194,107 @@ include 'header.php'
                                                 
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-6 ">
-                                                   
-                                                       
-                                                            
-                                                            <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
-                                                                <div class="btn-group me-2" role="group" aria-label="First group">
+                                                    <div class="col-md-6 mt-2">
+
+                                                        <div class="rb-box">
+                                                            <!-- Radio Button Module -->
+                                                            <div id="rb-1" class="rb">
                                                                 <?php
                                                                 $count = 0;
                                                                 foreach($frm_opts as $k => $v):
                                                                     if($k == 'inline')
                                                                         continue;
-                                                                    echo ' <button type="button" id="'.$k.'" class="btn btn-light" style="height:50px;width:50px" onclick="handleRateBtnClick(this)">'.$count.'</button>';
-                                                                    echo ' <input type="radio" id="option_'.$k.'" name="answer['.$row['id'].']" value="'.$k.'" hidden >';
+                                                                    $rb_tab_active = ($count == 0) ? "rb-tab-active" : '';
+                                                                    echo '<div class="rb-tab '. $rb_tab_active .'" data-value="'.$k.'" onclick="handleRateBtnClick(this)" id="'.$k.'">
+                                                                    <div class="rb-spot">
+                                                                        <span class="rb-txt">'.$count.'</span>
+                                                                    </div>
+                                                                    <input type="radio" id="option_'.$k.'" name="answer['.$row['id'].']" value="'.$k.'" hidden >
+                                                                    </div>';
+                                                                    
+                                                                    // echo ' <button type="button" id="'.$k.'" class="btn btn-light" style="height:50px;width:50px" onclick="handleRateBtnClick(this)">'.$count.'</button>';
+                                                                    // echo ' <input type="radio" id="option_'.$k.'" name="answer['.$row['id'].']" value="'.$k.'" hidden >';
                                                                     $count++;
                                                                 endforeach;
                                                                 ?>
+                                                            
                                                                 
-                                                                </div>
-                                                            </div>
-                                                        
+                                                            </div>  
+                                                        </div>
                                                     </div>
+                                                            
+                                                        <!-- <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
+                                                            <div class="btn-group me-2" role="group" aria-label="First group">
+                                                            <?php
+                                                            // $count = 0;
+                                                            // foreach($frm_opts as $k => $v):
+                                                            //     if($k == 'inline')
+                                                            //         continue;
+                                                            //     echo ' <button type="button" id="'.$k.'" class="btn btn-light" style="height:50px;width:50px" onclick="handleRateBtnClick(this)">'.$count.'</button>';
+                                                            //     echo ' <input type="radio" id="option_'.$k.'" name="answer['.$row['id'].']" value="'.$k.'" hidden >';
+                                                            //     $count++;
+                                                            // endforeach;
+                                                            ?>
+                                                            
+                                                            </div>
+                                                        </div> -->
+                                                        
                                                 </div>
+                                            <?php
+                                        }
+                                        elseif(isset($frm_opts->inline) && $frm_opts->inline == 1 && $first_val == 'Highly Dissatisfied'){
+                                            ?>
+                                            <div class="row">
+                                                <div class="col-md-6 co-xs-12">
+                                                    <table class="table table-borderless text-center"> 
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="col-md-2">
+                                                                    <i class='far fa-frown' style='font-size:48px;color:red'></i>
+                                                                    <p>Highly Dissatisfied</p>
+                                                                </td>
+                                                                <td class="col-md-2">
+                                                                    <p class="mt-50pc">Dissatisfied</p>
+                                                                </td>
+                                                                <td class="col-md-2">
+                                                                    <p class="mt-25pc">Neither Satisfied nor Dissatisfied</p>
+                                                                </td>
+                                                                <td class="col-md-2">
+                                                                    <p class="mt-50pc">Satisfied</p>
+                                                                </td>
+                                                                <td class="col-md-2">
+                                                                    <i class='far fa-smile' style='font-size:48px;color:green'></i>
+                                                                    <p>Highly Satisfied</p>
+                                                                </td>
+                                                                
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <table class="table table-bordered text-center">
+                                                        <tbody>
+                                                        
+                                                            <tr>
+                                                            <?php
+                                                                $count = 0;
+                                                                foreach($frm_opts as $k => $v):
+                                                                    if($k == 'inline')
+                                                                        continue;
+                                                                    echo '<td class="col-md-2">
+                                                                        <div class="icheck-primary">
+                                                                            <input type="radio" id="option_'.$k.'" name="answer['.$row['id'].']" value="'.$k.'" >
+                                                                            <label for="option_'.$k.'"></label>
+                                                                        </div>
+                                                                        </td>';
+                                                                    $count++;
+                                                                endforeach;    
+                                                            ?>
+                                                            
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
                                             <?php
                                         }
                                         else{
@@ -243,65 +323,11 @@ include 'header.php'
                                         <textarea name="answer[<?php echo $row['id'] ?>]" id="" cols="30" rows="4" class="form-control" placeholder="Write Something Here..." ></textarea>
                                     </div>
                                     <?php endif; ?>
-                                </div>	
-                            </div>
+                                </div>
+                            </div>	
+                       
                             <?php endwhile; ?>
-                            <div class="callout callout-info">
-                                <h5>Rate the overall service in a scale of 0 to 10</h5>	
-                                <div class="col-md-12">
-                                <div class="rb-box">
-                                    <!-- Radio Button Module -->
-                                    <div id="rb-1" class="rb">
-                                        <div class="rb-tab rb-tab-active" data-value="0">
-                                        <div class="rb-spot">
-                                            <span class="rb-txt">0</span>
-                                        </div>
-                                        </div>
-                                        <div class="rb-tab " data-value="1">
-                                        <div class="rb-spot">
-                                            <span class="rb-txt">1</span>
-                                        </div>
-                                        </div><div class="rb-tab" data-value="2">
-                                        <div class="rb-spot">
-                                            <span class="rb-txt">2</span>
-                                        </div>
-                                        </div><div class="rb-tab" data-value="3">
-                                        <div class="rb-spot">
-                                            <span class="rb-txt">3</span>
-                                        </div>
-                                        </div><div class="rb-tab" data-value="4">
-                                        <div class="rb-spot">
-                                            <span class="rb-txt">4</span>
-                                        </div>
-                                        </div><div class="rb-tab" data-value="5">
-                                        <div class="rb-spot">
-                                            <span class="rb-txt">5</span>
-                                        </div>
-                                        </div><div class="rb-tab" data-value="6">
-                                        <div class="rb-spot">
-                                            <span class="rb-txt">6</span>
-                                        </div>
-                                        </div><div class="rb-tab" data-value="7">
-                                        <div class="rb-spot">
-                                            <span class="rb-txt">7</span>
-                                        </div>
-                                        </div><div class="rb-tab" data-value="8">
-                                        <div class="rb-spot">
-                                            <span class="rb-txt">8</span>
-                                        </div>
-                                        </div><div class="rb-tab" data-value="9">
-                                        <div class="rb-spot">
-                                            <span class="rb-txt">9</span>
-                                        </div>
-                                        </div><div class="rb-tab" data-value="10">
-                                        <div class="rb-spot">
-                                            <span class="rb-txt">10</span>
-                                        </div>
-                                        </div>
-                                    </div>  
-                                </div>
-                                </div>
-                            </div>
+                            
                             
                         </div>
                         </form>
@@ -409,12 +435,12 @@ include 'header.php'
         function handleRateBtnClick(elem){
             console.log('option_'+elem.id);
             $("#option_"+elem.id).prop("checked", "checked");
-            if($(elem).hasClass('rate-btn-color'))
-                $(elem).removeClass('rate-btn-color');
-            else{
-                $(elem).siblings().removeClass('rate-btn-color')
-                $(elem).addClass('rate-btn-color');
-            }
+            // if($(elem).hasClass('rate-btn-color'))
+            //     $(elem).removeClass('rate-btn-color');
+            // else{
+            //     $(elem).siblings().removeClass('rate-btn-color')
+            //     $(elem).addClass('rate-btn-color');
+            // }
         }
         //Switcher function:
         $(".rb-tab").click(function(){
