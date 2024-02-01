@@ -58,7 +58,7 @@ include 'header.php'
                                     <input type="text" name="lastname" class="form-control form-control-sm" required >
                                 </div>
                                 <div class="form-group">
-                                    <p>By clicking Begin Survey, I agree to the SUBZ® Inc <a href="#">Terms of Use</a> and <a href="#">Privacy Statement</a>.</p>
+                                    <p>By clicking Begin Survey, I agree to the SUBZ Kenya <a href="#">Terms of Use</a> and <a href="#">Privacy Statement</a>.</p>
                                 </div>
                                 <div class="d-flex w-100 ">
                                     <button class="btn btn-sm btn-flat bg-gradient-primary mx-1" form="answer-survey-user">Begin survey</button>
@@ -75,9 +75,14 @@ include 'header.php'
                             <form action="" id="answer-survey-service" name="answer-survey-service">
                                 <input type="hidden" name="survey_id2" value="<?php echo $id ?>">
                                 <div class="form-group">
-                                    <label for="" class="control-label">* Please enter SUBZ store # as listed on your receipt</label>
+                                    <label for="storenumber" class="control-label">* Please select SUBZ store visited</label>
+                                     <select name="storenumber" id="storenumber" class="custom-select custom-select-md">
+                                        <option value="1">GIGIRI</option>
+                                         <option value="2">TIMAU PLAZA</option>
+                                          <option value="3">AMEE ARCADE</option>
+                                     </select>
                                 </div>
-                                <div class="form-group row">
+                                <!--<div class="form-group row">
                                     <div class="col-xs-2 mr-1">
                                         <input type="tel" name="storenumber" class="form-control form-control-sm" maxlength="6" size="12"
                                         title="Please enter the first part of your Subway store number (before the dash)" required >
@@ -87,7 +92,8 @@ include 'header.php'
                                         <input type="tel" name="storenumber2" class="form-control form-control-sm" maxlength="2" size="4"
                                         title="Please enter the second part of your Subway store number (after the dash)" value="0" required >
                                     </div>
-                                </div>
+                                </div>-->
+
                                 <div class="form-group">
                                     <label for="" class="control-label">* Please tell us the date of your purchase as listed on your receipt. Only purchases in the past 5 days are valid.</label>
                                     <input type="date" name="servicedate" class="form-control form-control-sm" required >
@@ -135,23 +141,21 @@ include 'header.php'
                                         ?>
                                     </select>
                                 </div>
+                               
                                 <div class="form-group">
-                                    <label for="" class="control-label">* Transaction Number</label>
-                                </div>
-                                <div class="form-group row">
-                                    <div class="col-xs-2 mr-1">
-                                        <input type="tel" name="txnumber1" title="Please enter the first part of your transaction ID (before the slash)" 
-                                        class="form-control form-control-sm" value="1" maxlength="2" size="2" required >
-                                    </div>
-                                         / 
-                                    <div class="col-xs-1 ml-1 mr-1">
+                                    <label for="txnumber1" class="control-label">* Transaction Number</label>
+                                    <input type="tel" name="txnumber1" id="txnumber1" title="Please enter your transaction ID" 
+                                        class="form-control form-control-sm" placeholder="47HGDJ649001" maxlength="15" size="15" required >
+                                    
+                                          
+                                    <!--<div class="col-xs-1 ml-1 mr-1">
                                         <input type="text" name="txnumber2" size="4" title="Please enter the second part of your transaction ID (between the slash and dash)" class="form-control form-control-sm" value="A" required >
                                     </div>
                                     -
                                     <div class="col-xs-1 ml-1">
                                         <input type="tel" name="txnumber3" title="Please enter the third part of your transaction ID (after the dash)" 
                                         class="form-control form-control-sm" maxlength="10" size="12" required >
-                                    </div>
+                                    </div>-->
                                 </div>
                                 <div class="d-flex w-100 ">
                                     <button class="btn btn-sm btn-flat bg-gradient-primary mx-1" form="answer-survey-service">Next</button>
@@ -160,7 +164,7 @@ include 'header.php'
                             </form>
                         </div>
                     </div>
-                    <div class="card card-outline card-success" id="answer-card" style="display:block">
+                    <div class="card card-outline card-success" id="answer-card" style="display:none">
                         <div class="card-header">
                             <h3 class="card-title"><b>Survey Questionaire</b></h3>
                         </div>
@@ -186,7 +190,7 @@ include 'header.php'
                                         if(isset($frm_opts->inline) && $frm_opts->inline == 1 && $first_val != 'Highly Dissatisfied'){
                                             ?>
                                                 <div class="row">
-                                                    <div class="col-md-6">
+                                                    <div class="col-md-8">
                                                         <i class='far fa-frown' style='font-size:48px;color:red'></i>
                                                         <i class='far fa-smile float-right' style='font-size:48px;color:green'></i>
                                                     
@@ -194,7 +198,7 @@ include 'header.php'
                                                 
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-6 mt-2">
+                                                    <div class="col-md-8 mt-2">
 
                                                         <div class="rb-box">
                                                             <!-- Radio Button Module -->
@@ -245,7 +249,7 @@ include 'header.php'
                                         elseif(isset($frm_opts->inline) && $frm_opts->inline == 1 && $first_val == 'Highly Dissatisfied'){
                                             ?>
                                             <div class="row">
-                                                <div class="col-md-6 co-xs-12">
+                                                <div class="col-md-8 co-xs-12 co-sm-12">
                                                     <table class="table table-borderless text-center"> 
                                                         <tbody>
                                                             <tr>
@@ -299,6 +303,8 @@ include 'header.php'
                                         }
                                         else{
                                             foreach($frm_opts as $k => $v):
+                                                 if($k == 'inline')
+                                                    continue;
                                             ?>
                                             <div class="icheck-primary">
                                                 <input type="radio" id="option_<?php echo $k ?>" name="answer[<?php echo $row['id'] ?>]" value="<?php echo $k ?>" checked="">

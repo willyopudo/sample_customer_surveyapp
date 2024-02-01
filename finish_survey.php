@@ -39,9 +39,9 @@ include 'header.php'
 
                                             Enjoy one (1) delicious cookie on us WITH the purchase of any sub or salad.<br><br>
 
-                                            This offer is valid at participating SUBZ® restaurants for in-restaurant orders only. Additional charge for Extras. No cash value. Not for sale. One time use. One offer code use per qualifying item(s).  Cannot be combined with promotional offers. Void if transferred, sold, auctioned, reproduced, purchased or altered, & where prohibited.</b><br><br>
+                                            This offer is valid at participating SUBZ restaurants for in-restaurant orders only. Additional charge for Extras. No cash value. Not for sale. One time use. One offer code use per qualifying item(s).  Cannot be combined with promotional offers. Void if transferred, sold, auctioned, reproduced, purchased or altered, & where prohibited.</b><br><br>
 
-                                        <b>Please write the offer code below on your purchase receipt and show it to a Sandwich Artist® when you check out. Offer can be redeemed at any participating SUBZ® location by the expiration date listed below. Hurry in!</b>
+                                        <b>Please write the offer code below on your purchase receipt and show it to any of our team member when you check out. Offer can be redeemed at any participating SUBZ location by the expiration date listed below. Hurry in!</b>
                                     </p>
                                     <br>
                                     <h2 class="green-text text-center">Offer Code :<strong><?php echo ' '.$possible_answers->$answer.'-'.$storenumber.'-'.$datepart.'-'.substr($transactionnumber,0,4) ?></strong></h2>

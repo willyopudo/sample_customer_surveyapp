@@ -220,7 +220,7 @@ Class Action {
     }
     function save_answer_service(){
         extract($_POST);
-            $data = " storenumber = '$storenumber$storenumber2' , servicedate = '$servicedate $servicehour:$serviceminute:00', transactionnumber = '$txnumber1$txnumber2$txnumber3'";
+            $data = " storenumber = '$storenumber' , servicedate = '$servicedate $servicehour:$serviceminute:00', transactionnumber = '$txnumber1'";
             // exit(var_dump($data));
             $insertedId = 0;
             if(!$this->db->query("INSERT INTO survey_service set $data")){
