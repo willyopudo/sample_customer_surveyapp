@@ -106,10 +106,10 @@
 
   <!-- Main Footer -->
   <footer class="main-footer">
-    <strong><a href="https://willyf.git.net/">Dev by Willyf</a>.</strong>
-    Donate
+    <strong>Dev by <a href="https://willyf.git.net/"> Gauge Technology</a>.</strong>
+    
     <div class="float-right d-none d-sm-inline-block">
-      <b>SUBZ Review and Feedback</b>
+      <b>SUBZ Kenya Review and Feedback</b>
     </div>
   </footer>
 </div>

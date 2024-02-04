@@ -264,4 +264,75 @@ Class Action {
 			return 1;
 		}
 	}
+
+    function getAllStores(){
+		$qry = $this->db->query("SELECT id, store_code, name, location FROM subz_stores order by id asc ");
+        $response = [];
+		if($qry && $qry->num_rows > 0){
+            $response["data"] = $qry->fetch_all();
+			return json_encode($response);
+		}
+        else{
+            return '{"status" : "0", "resultdesc" : "no records found"}';
+        }
+	}
+
+    function getAllSurveySubmissions(){
+		$qry = $this->db->query("select a.answer,q.question,q.frm_option,ss.storenumber,zs.name AS storename, su.email AS cust_email, a.date_created, ss.transactionnumber  from answers a 
+        inner join questions q on a.question_id = q.id
+        inner join survey_service ss on a.survey_service_id = ss.id
+        inner join survey_user su on su.id = a.survey_user_id
+        inner join subz_stores zs on zs.id = ss.storenumber");
+        $response = array();
+		if($qry && $qry->num_rows > 0){
+            while($row = $qry->fetch_assoc()){
+                $newArr = array();
+                $possible_answers = json_decode($row['frm_option']);
+                //var_dump($row);
+                $answer = $row['answer'];
+                $newArr[] = substr($row['question'],0,40).'...';
+                $newArr[] = $row['frm_option'] != '' ? $possible_answers->$answer : $row['answer'];
+                $newArr[] = $row["storename"];
+                $newArr[] = $row["cust_email"];
+                $newArr[] = $row["transactionnumber"];
+                $newArr[] = $row["date_created"];
+                
+                $response["data"][] = $newArr;
+            }
+            //var_dump($response);
+            //$response["data"] = $qry->fetch_all();
+			return json_encode($response);
+		}
+        else{
+            return '{"status" : "0", "resultdesc" : "no records found"}';
+        }
+	}
+
+    function getSurveyTotalsByStore(){
+		$qry = $this->db->query("select count(a.id) AS total_surveys,b.name AS store_name from survey_service a
+        right join subz_stores b on b.id = a.storenumber
+        group by b.name ");
+        //var_dump($qry->fetch_all());
+		if($qry && $qry->num_rows > 0){
+			return json_encode($qry->fetch_all());
+		}
+        else{
+            return '{"status" : "0", "resultdesc" : "no records found"}';
+        }
+	}
+
+    function getSatisfactionScoreByStore(){
+		$qry = $this->db->query("select a.answer,q.frm_option,ss.storenumber,zs.name AS storename from answers a 
+        inner join questions q on a.question_id = q.id
+        inner join survey_service ss on a.survey_service_id = ss.id
+        right join subz_stores zs on zs.id = ss.storenumber
+        where  q.question like '%Are you likely to return%'; ");
+        //var_dump($qry->fetch_all());
+		if($qry && $qry->num_rows > 0){
+			return json_encode($qry->fetch_all());
+		}
+        else{
+            return '{"status" : "0", "resultdesc" : "no records found"}';
+        }
+	}
 }

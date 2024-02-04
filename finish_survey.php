@@ -6,7 +6,7 @@
 $qry = $conn->query("select a.answer,q.question,q.frm_option,ss.storenumber,ss.servicedate,ss.transactionnumber from answers a 
 inner join questions q on a.question_id = q.id
 inner join survey_service ss on a.survey_service_id = ss.id
-where a.survey_id = ".$_GET['surveyid']. " and a.survey_user_id = ".$_GET['userid']. " and q.question like '%How much would you recomend a friend%'")->fetch_array();
+where a.survey_id = ".$_GET['surveyid']. " and a.survey_user_id = ".$_GET['userid']. " and q.question like '%how likely are you to recommend SUBZ restaurants to your family or friends%'")->fetch_array();
 
 include 'header.php'
 ?>
@@ -66,12 +66,12 @@ include 'header.php'
             </div>
         </div>
         <footer class="main-footer" style="margin-left : 0%">
-    <strong><a href="https://willyf.git.net/">Dev by Willyf</a>.</strong>
-    Donate
-    <div class="float-right d-none d-sm-inline-block">
-      <b>SUBZ Review and Feedback</b>
-    </div>
-  </footer>
+            Dev by<strong><a href="https://willyf.git.net/"> Gauge Technologies</a>.</strong>
+    
+            <div class="float-right d-none d-sm-inline-block">
+            <b>SUBZ Review and Feedback</b>
+            </div>
+        </footer>
     </div>
     <!-- ./wrapper -->
 

@@ -40,6 +40,13 @@
 	<script src="assets/plugins/jquery/jquery.min.js"></script>
   <!-- jQuery UI 1.11.4 -->
   <script src="assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+  <?php
+    if (strpos($_SERVER['REQUEST_URI'], "home") !== false){
+        ?>
+           <script src="node_modules/chart.js/dist/chart.umd.js"></script>
+        <?php
+    }
+    ?>
  <!-- summernote -->
   <link rel="stylesheet" href="assets/plugins/summernote/summernote-bs4.min.css">
 </head>

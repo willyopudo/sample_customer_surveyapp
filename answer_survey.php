@@ -77,9 +77,9 @@ include 'header.php'
                                 <div class="form-group">
                                     <label for="storenumber" class="control-label">* Please select SUBZ store visited</label>
                                      <select name="storenumber" id="storenumber" class="custom-select custom-select-md">
-                                        <option value="1">GIGIRI</option>
-                                         <option value="2">TIMAU PLAZA</option>
-                                          <option value="3">AMEE ARCADE</option>
+                                        <option value="2">GIGIRI</option>
+                                         <option value="4">TIMAU PLAZA</option>
+                                          <option value="5">AMEE ARCADE</option>
                                      </select>
                                 </div>
                                 <!--<div class="form-group row">

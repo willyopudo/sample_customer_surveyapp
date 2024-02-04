@@ -74,6 +74,26 @@ if($action == "update_user"){
 	if($save)
 		echo $save;
 }
+if($action == "fetchall_stores"){
+	$save = $crud->getAllStores();
+	if($save)
+		echo $save;
+}
+if($action == "fetchall_survey_submissions"){
+	$save = $crud->getAllSurveySubmissions();
+	if($save)
+		echo $save;
+}
+if($action == "fetch_survey_totals_by_store"){
+	$save = $crud->getSurveyTotalsByStore();
+	if($save)
+		echo $save;
+}
+if($action == "fetch_satisfaction_score_by_store"){
+	$save = $crud->getSatisfactionScoreByStore();
+	if($save)
+		echo $save;
+}
 
 ob_end_flush();
 ?>
