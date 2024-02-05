@@ -7,7 +7,7 @@ foreach($qry as $k => $v){
 		$k = 'stitle';
 	$$k = $v;
 }
-$answers = $conn->query("SELECT distinct(user_id) from answers where survey_id ={$id}")->num_rows;
+$answers = $conn->query("SELECT distinct(survey_user_id) from answers where survey_id ={$id}")->num_rows;
 ?>
 <div class="col-lg-12">
 	<div class="row">
@@ -42,52 +42,162 @@ $answers = $conn->query("SELECT distinct(user_id) from answers where survey_id =
 				<div class="card-body ui-sortable">
 					<?php 
 					$question = $conn->query("SELECT * FROM questions where survey_id = $id order by abs(order_by) asc,abs(id) asc");
-					while($row=$question->fetch_assoc()):	
-					?>
-					<div class="callout callout-info">
-						<div class="row">
-							<div class="col-md-12">	
-								<span class="dropleft float-right">
-									<a class="fa fa-ellipsis-v text-dark" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
-									<div class="dropdown-menu" style="">
-								        <a class="dropdown-item edit_question text-dark" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>">Edit</a>
-								        <div class="dropdown-divider"></div>
-								        <a class="dropdown-item delete_question text-dark" href="javascript:void(0)" data-id="<?php echo $row['id'] ?>">Delete</a>
-								     </div>
-								</span>	
-							</div>	
-						</div>	
-						<h5><?php echo $row['question'] ?></h5>	
-						<div class="col-md-12">
-						<input type="hidden" name="qid[]" value="<?php echo $row['id'] ?>">	
-							<?php
-								if($row['type'] == 'radio_opt'):
+                    while($row=$question->fetch_assoc()):	
+                    ?>
+                    <div class="callout callout-info">
+                        <h5><?php echo $row['question'] ?></h5>	
+                        <div class="col-md-12">
+                            <input type="hidden" name="qid[<?php echo $row['id'] ?>]" value="<?php echo $row['id'] ?>">	
+                            <input type="hidden" name="type[<?php echo $row['id'] ?>]" value="<?php echo $row['type'] ?>">	
+                            <?php
+                                if($row['type'] == 'radio_opt'):
                                     $frm_opts = json_decode($row['frm_option']);
-                                    //var_dump($frm_opts);
-									foreach($frm_opts as $k => $v):
-                                        if($k == 'inline')
+                                //var_dump(array_values($frm_opts));
+                                $first_val  =  reset($frm_opts);
+                                if(isset($frm_opts->inline) && $frm_opts->inline == 1 && $first_val != 'Highly Dissatisfied'){
+                                    ?>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <i class='far fa-frown' style='font-size:48px;color:red'></i>
+                                                <i class='far fa-smile float-right' style='font-size:48px;color:green'></i>
+                                            
+                                            </div>
+                                        
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-8 mt-2">
+
+                                                <div class="rb-box">
+                                                    <!-- Radio Button Module -->
+                                                    <div id="rb-1" class="rb">
+                                                        <?php
+                                                        $count = 0;
+                                                        foreach($frm_opts as $k => $v):
+                                                            if($k == 'inline')
+                                                                continue;
+                                                            $rb_tab_active = ($count == 0) ? "rb-tab-active" : '';
+                                                            echo '<div class="rb-tab '. $rb_tab_active .'" data-value="'.$k.'" onclick="handleRateBtnClick(this)" id="'.$k.'">
+                                                            <div class="rb-spot">
+                                                                <span class="rb-txt">'.$count.'</span>
+                                                            </div>
+                                                            <input type="radio" id="option_'.$k.'" name="answer['.$row['id'].']" value="'.$k.'" hidden >
+                                                            </div>';
+                                                            
+                                                            // echo ' <button type="button" id="'.$k.'" class="btn btn-light" style="height:50px;width:50px" onclick="handleRateBtnClick(this)">'.$count.'</button>';
+                                                            // echo ' <input type="radio" id="option_'.$k.'" name="answer['.$row['id'].']" value="'.$k.'" hidden >';
+                                                            $count++;
+                                                        endforeach;
+                                                        ?>
+                                                    
+                                                        
+                                                    </div>  
+                                                </div>
+                                            </div>
+                                                    
+                                                <!-- <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
+                                                    <div class="btn-group me-2" role="group" aria-label="First group">
+                                                    <?php
+                                                    // $count = 0;
+                                                    // foreach($frm_opts as $k => $v):
+                                                    //     if($k == 'inline')
+                                                    //         continue;
+                                                    //     echo ' <button type="button" id="'.$k.'" class="btn btn-light" style="height:50px;width:50px" onclick="handleRateBtnClick(this)">'.$count.'</button>';
+                                                    //     echo ' <input type="radio" id="option_'.$k.'" name="answer['.$row['id'].']" value="'.$k.'" hidden >';
+                                                    //     $count++;
+                                                    // endforeach;
+                                                    ?>
+                                                    
+                                                    </div>
+                                                </div> -->
+                                                
+                                        </div>
+                                    <?php
+                                }
+                                elseif(isset($frm_opts->inline) && $frm_opts->inline == 1 && $first_val == 'Highly Dissatisfied'){
+                                    ?>
+                                    <div class="row">
+                                        <div class="col-md-8 co-xs-12 co-sm-12">
+                                            <table class="table table-borderless text-center"> 
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="col-md-2">
+                                                            <i class='far fa-frown' style='font-size:48px;color:red'></i>
+                                                            <p>Highly Dissatisfied</p>
+                                                        </td>
+                                                        <td class="col-md-2">
+                                                            <p class="mt-50pc">Dissatisfied</p>
+                                                        </td>
+                                                        <td class="col-md-2">
+                                                            <p class="mt-25pc">Neither Satisfied nor Dissatisfied</p>
+                                                        </td>
+                                                        <td class="col-md-2">
+                                                            <p class="mt-50pc">Satisfied</p>
+                                                        </td>
+                                                        <td class="col-md-2">
+                                                            <i class='far fa-smile' style='font-size:48px;color:green'></i>
+                                                            <p>Highly Satisfied</p>
+                                                        </td>
+                                                        
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <table class="table table-bordered text-center">
+                                                <tbody>
+                                                
+                                                    <tr>
+                                                    <?php
+                                                        $count = 0;
+                                                        foreach($frm_opts as $k => $v):
+                                                            if($k == 'inline')
+                                                                continue;
+                                                            echo '<td class="col-md-2">
+                                                                <div class="icheck-primary">
+                                                                    <input type="radio" id="option_'.$k.'" name="answer['.$row['id'].']" value="'.$k.'" >
+                                                                    <label for="option_'.$k.'"></label>
+                                                                </div>
+                                                                </td>';
+                                                            $count++;
+                                                        endforeach;    
+                                                    ?>
+                                                    
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <?php
+                                }
+                                else{
+                                    foreach($frm_opts as $k => $v):
+                                         if($k == 'inline')
                                             continue;
-							?>
-							<div class="icheck-primary <?= (isset($frm_opts->inline) && $frm_opts->inline == 1) ? 'd-inline' : '' ?>">
-		                        <input type="radio" id="option_<?php echo $k ?>" name="answer[<?php echo $row['id'] ?>]" value="<?php echo $k ?>" checked="">
-		                        <label for="option_<?php echo $k ?>"><?php echo $v ?></label>
-		                     </div>
-								<?php endforeach; ?>
-						<?php elseif($row['type'] == 'check_opt'): 
-									foreach(json_decode($row['frm_option']) as $k => $v):
-							?>
-							<div class="icheck-primary">
-		                        <input type="checkbox" id="option_<?php echo $k ?>" name="answer[<?php echo $row['id'] ?>][]" value="<?php echo $k ?>" >
-		                        <label for="option_<?php echo $k ?>"><?php echo $v ?></label>
-		                     </div>
-								<?php endforeach; ?>
-						<?php else: ?>
-							<div class="form-group">
-								<textarea name="answer[<?php echo $row['id'] ?>]" id="" cols="30" rows="4" class="form-control" placeholder="Write Something Here..."></textarea>
-							</div>
-						<?php endif; ?>
-						</div>	
-					</div>
+                                    ?>
+                                    <div class="icheck-primary">
+                                        <input type="radio" id="option_<?php echo $k ?>" name="answer[<?php echo $row['id'] ?>]" value="<?php echo $k ?>" checked="">
+                                        <label for="option_<?php echo $k ?>"><?php echo $v ?></label>
+                                    </div>
+                                    <?php
+                                    endforeach;
+                                }
+                            ?>
+                                    
+                            <?php 
+                                elseif($row['type'] == 'check_opt'): 
+                                    foreach(json_decode($row['frm_option']) as $k => $v):
+                            ?>
+                            <div class="icheck-primary">
+                                <input type="checkbox" id="option_<?php echo $k ?>" name="answer[<?php echo $row['id'] ?>][]" value="<?php echo $k ?>" >
+                                <label for="option_<?php echo $k ?>"><?php echo $v ?></label>
+                            </div>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                            <div class="form-group">
+                                <textarea name="answer[<?php echo $row['id'] ?>]" id="" cols="30" rows="4" class="form-control" placeholder="Write Something Here..." ></textarea>
+                            </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>	
 					<?php endwhile; ?>
 				</div>
 				</form>
@@ -141,4 +251,10 @@ $answers = $conn->query("SELECT distinct(user_id) from answers where survey_id =
 			}
 		})
 	}
+
+    $(".rb-tab").click(function(){
+    //Spot switcher:
+        $(this).parent().find(".rb-tab").removeClass("rb-tab-active");
+        $(this).addClass("rb-tab-active");
+    });
 </script>

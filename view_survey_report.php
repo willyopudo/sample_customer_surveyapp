@@ -6,7 +6,7 @@ foreach($qry as $k => $v){
 		$k = 'stitle';
 	$$k = $v;
 }
-$taken = $conn->query("SELECT distinct(user_id) from answers where survey_id ={$id}")->num_rows;
+$taken = $conn->query("SELECT distinct(survey_user_id) from answers where survey_id ={$id}")->num_rows;
 $answers = $conn->query("SELECT a.*,q.type from answers a inner join questions q on q.id = a.question_id where a.survey_id ={$id}");
 $ans = array();
 
@@ -23,6 +23,7 @@ while($row=$answers->fetch_assoc()){
 		$ans[$row['question_id']][] = $row['answer'];
 	}
 }
+//var_dump(json_encode($ans));
 ?>
 <style>
 	.tfield-area{
@@ -75,6 +76,8 @@ while($row=$answers->fetch_assoc()){
 							<?php if($row['type'] != 'textfield_s'):?>
 								<ul>
 							<?php foreach(json_decode($row['frm_option']) as $k => $v): 
+                                if($k == 'inline')
+                                    continue;
 								$prog = ((isset($ans[$row['id']][$k]) ? count($ans[$row['id']][$k]) : 0) / $taken) * 100;
 								$prog = round($prog,2);
 								?>
@@ -84,7 +87,7 @@ while($row=$answers->fetch_assoc()){
 									</div>
 									<div class="d-flex w-100">
 									<span class=""><?php echo isset($ans[$row['id']][$k]) ? count($ans[$row['id']][$k]) : 0 ?>/<?php echo $taken ?></span>
-									<div class="mx-1 col-sm-8"">
+									<div class="mx-1 col-sm-8">
 									<div class="progress w-100" >
 					                  <div class="progress-bar bg-primary progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $prog ?>%">
 					                    <span class="sr-only"><?php echo $prog ?>%</span>
