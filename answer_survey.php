@@ -250,11 +250,11 @@ include 'header.php'
                                             ?>
                                             <div class="row">
                                                 <div class="col-md-8 co-xs-12 co-sm-12">
-                                                    <table class="table table-borderless text-center"> 
+                                                    <table class="table table-borderless  text-center rating-desc-tbl"> 
                                                         <tbody>
                                                             <tr>
                                                                 <td class="col-md-2">
-                                                                    <i class='far fa-frown' style='font-size:48px;color:red'></i>
+                                                                    <i class="far fa-frown rating-smiley-frown" ></i>
                                                                     <p>Highly Dissatisfied</p>
                                                                 </td>
                                                                 <td class="col-md-2">
@@ -267,7 +267,7 @@ include 'header.php'
                                                                     <p class="mt-50pc">Satisfied</p>
                                                                 </td>
                                                                 <td class="col-md-2">
-                                                                    <i class='far fa-smile' style='font-size:48px;color:green'></i>
+                                                                    <i class="far fa-smile rating-smiley-smile" ></i>
                                                                     <p>Highly Satisfied</p>
                                                                 </td>
                                                                 

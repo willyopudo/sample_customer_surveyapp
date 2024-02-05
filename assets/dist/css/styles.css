@@ -180,3 +180,20 @@ p {
 .mt-25pc {
   margin-top: 25%;
 } */
+.rating-desc-tbl i {
+  font-size: 48px;
+}
+.rating-desc-tbl .rating-smiley-frown {
+  color: red;
+}
+.rating-desc-tbl .rating-smiley-smile {
+  color: green;
+}
+@media (max-width: 430px) {
+  .rating-desc-tbl i {
+    font-size: 20px;
+  }
+  .rating-desc-tbl p {
+    font-size: 8px;
+  }
+}
